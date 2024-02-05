@@ -1,0 +1,33 @@
+footer {
+    position: fixed; /* フッターを画面の下部に固定 */
+    bottom: 0;
+    width: 100%;
+    max-width: 600px; /* コンテンツの最大幅を600pxに設定 */
+    margin: auto; /* 左右のマージンを自動に設定して中央寄せ */
+    background-color: #f8f9fa; /* ライトグレーの背景色に変更 */
+    color: #333; /* テキスト色をダークに変更 */
+    text-align: center;
+    padding: 10px 0; /* 上下のパディング */
+    border-top: 1px solid #e7e7e7; /* 上部に薄い境界線を追加 */
+  }
+  
+  footer nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  footer nav ul li {
+    display: inline-block;
+  }
+  
+  .centered-button {
+    display: inline-block;
+    background-color: #007bff; /* ボタンの背景色 */
+    color: white; /* ボタンのテキスト色 */
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 20px; /* 丸いボタン */
+    font-weight: bold;
+  }
+  

@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  max-width: 600px; /* コンテンツの最大幅を600pxに設定 */
+  margin: auto; /* 左右のマージンを自動に設定して中央寄せ */
+  padding: 20px; /* 内側のパディングを設定 */
+  box-sizing: border-box; /* パディングとボーダーを幅と高さに含める */
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 10px; /* スマートフォンではパディングを少なく */
+  }
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sign-out-button {
+  margin-left: auto;
+  margin-right: 10%; /* 右端から10%のマージンを設定 */
+}
