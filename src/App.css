@@ -60,3 +60,39 @@
   margin-left: auto;
   margin-right: 10%; /* 右端から10%のマージンを設定 */
 }
+
+.vertical-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* ボタン間のスペース */
+}
+
+.button {
+  width: 150px; /* ボタンの幅を統一 */
+  height: 40px; /* ボタンの高さを統一 */
+  font-size: 16px; /* テキストサイズを調整 */
+}
+.button.selected {
+  background-color: #4CAF50; /* 選択されたボタンの背景色 */
+  color: white; /* 選択されたボタンのテキスト色 */
+}
+.vertical-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* ボタン間のスペース */
+}
+
+.button {
+  width: 150px; /* ボタンの幅を統一 */
+  height: auto; /* ボタンの高さを内容に合わせて自動調整 */
+  padding: 10px; /* ボタン内のパディングを調整 */
+  font-size: 16px; /* テキストサイズを調整 */
+  white-space: normal; /* テキストがボタン内で折り返されるように設定 */
+  text-align: center; /* テキストを中央揃えに */
+}
+
+.App-header {
+  margin-bottom: 20px; /* ヘッダーの下マージンを設定 */
+}
