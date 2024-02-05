@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../App.css';
+import '../App.css'; // CSSファイルをインポート
 
 function TemplateDisplay({ userName }) {
   const [images, setImages] = useState([]);
@@ -105,7 +105,6 @@ function TemplateDisplay({ userName }) {
     }
   };
 
-  // 追加: すべての状態をリセットする関数
   const resetAllStates = () => {
     setSelectedButtons({ A: false, B: false, C: false });
     setSelectedInfectionButton('');
@@ -128,14 +127,14 @@ function TemplateDisplay({ userName }) {
           <p>ID: {images[currentPage].id}</p>
           <p>How</p>
           <div className="vertical-buttons">
-            {['A', 'B', 'C'].map((button) => (
-              <button key={button} onClick={() => handleButtonSelect(button)} className={selectedButtons[button] ? 'selected' : ''}>{button}</button>
+            {['Smear examination​', 'Culture​', 'Clinical findings​'].map((button) => (
+              <button key={button} onClick={() => handleButtonSelect(button)} className={`button ${selectedButtons[button] ? 'selected' : ''}`}>{button}</button>
             ))}
           </div>
           <p>Infection</p>
           <div className="vertical-buttons">
-            {['A', 'B', 'C', 'D', 'E'].map((button) => (
-              <button key={button} onClick={() => handleInfectionButtonSelect(button)} className={selectedInfectionButton === button ? 'selected' : ''}>{button}</button>
+            {['Achanthamoeba​', 'Bacterial​', 'Fungal​', 'Viral​', 'Others​'].map((button) => (
+              <button key={button} onClick={() => handleInfectionButtonSelect(button)} className={`button ${selectedInfectionButton === button ? 'selected' : ''}`}>{button}</button>
             ))}
           </div>
           <p>Country / Region</p>
@@ -147,8 +146,8 @@ function TemplateDisplay({ userName }) {
           />
           <p>Sex</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-            <button onClick={() => handleSexSelect('Male')} className={selectedSex === 'Male' ? 'selected' : ''}>Male</button>
-            <button onClick={() => handleSexSelect('Female')} className={selectedSex === 'Female' ? 'selected' : ''}>Female</button>
+            <button onClick={() => handleSexSelect('Male')} className={`button ${selectedSex === 'Male' ? 'selected' : ''}`}>Male</button>
+            <button onClick={() => handleSexSelect('Female')} className={`button ${selectedSex === 'Female' ? 'selected' : ''}`}>Female</button>
           </div>
           <p>Age</p>
           <input
@@ -166,12 +165,11 @@ function TemplateDisplay({ userName }) {
             rows="3"
             style={{ width: '80%', boxSizing: 'border-box' }}
           />
-          <button onClick={handleSubmit} style={{ marginTop: '20px' }} disabled={!selectedInfectionButton}>決定</button>
+          <button onClick={handleSubmit} style={{ marginTop: '20px', marginBottom: '60px' }} className="button" disabled={!selectedInfectionButton}>決定</button>
         </div>
       )}
     </div>
   );
-  
 }
 
 export default TemplateDisplay;
