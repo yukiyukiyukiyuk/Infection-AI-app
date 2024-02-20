@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../App.css'; // CSSファイルをインポート
 
 function TemplateDisplay({ userName }) {
@@ -11,32 +11,32 @@ function TemplateDisplay({ userName }) {
   const [age, setAge] = useState('');
   const [freeComment, setFreeComment] = useState('');
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      if (!userName) return;
+  const fetchImages = useCallback(async () => {
+    if (!userName) return;
 
-      const url = `https://tjzy8324t3.execute-api.ap-northeast-1.amazonaws.com/test`;
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userName }),
-        });
+    const url = `https://tjzy8324t3.execute-api.ap-northeast-1.amazonaws.com/test`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userName }),
+      });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setImages(data);
-      } catch (error) {
-        console.error('Fetch error:', error);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
-
-    fetchImages();
+      const data = await response.json();
+      setImages(data);
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
   }, [userName]);
+
+  useEffect(() => {
+    fetchImages();
+  }, [fetchImages]);
 
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
@@ -99,6 +99,14 @@ function TemplateDisplay({ userName }) {
         throw new Error('Failed to submit data');
       }
       alert('Data successfully submitted!');
+      await fetchImages();
+
+      if (currentPage < images.length - 1) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        setCurrentPage(0);
+      }
+      resetAllStates();
     } catch (error) {
       console.error('Submission error:', error);
       alert('Error submitting data');
