@@ -10,13 +10,20 @@ const Footer = () => {
   const buttonLabel = isHome ? 'Question' : 'Home';
   const linkTo = isHome ? '/template-display' : '/';
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // スムーズなスクロール動作
+    });
+  };
+
   return (
     <footer>
       <nav>
         <ul>
           <li>
             {/* ボタンのスタイルを適用するためのクラス名を追加 */}
-            <Link to={linkTo} className="centered-button">{buttonLabel}</Link>
+            <Link to={linkTo} className="centered-button" onClick={scrollToTop}>{buttonLabel}</Link>
           </li>
         </ul>
       </nav>
