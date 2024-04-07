@@ -65,38 +65,41 @@ const App = ({ signOut, user }) => {
   }, [response]);
 
   return (
-    <div className="App" style={{ width: '540px', height: '960px' }}>
+    <div className="App">
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleImageChange} />
-        <button type="submit">Search</button>
+        <button type="submit">Upload</button>
       </form>
       {image && (
         <div>
-          <p>Selected file: {image.name}</p>
-          <img src={URL.createObjectURL(image)} alt="Selected" style={{ maxWidth: '100%', maxHeight: '400px' }} />
+          <p className="selected-file">Selected file: {image.name}</p>
+          <img src={URL.createObjectURL(image)} alt="Selected" />
         </div>
       )}
       {response && (
         <div>
-          <p>The highest probability result is "{labels[response.probabilities.indexOf(maxProbability)]}".</p>
+          <p className="result-text">
+            The highest probability result is "{labels[response.probabilities.indexOf(maxProbability)]}".
+          </p>
           {labels.map((label, index) => (
-            <div key={index}>
-              <p>
+            <div className="probability-bar-container" key={index}>
+              <p className="probability-label">
                 {label}: {response.probabilities[index]}
               </p>
               <div
+                className="probability-bar"
                 style={{
-                  width: `${(response.probabilities[index] / maxProbability) * 70}%`,
-                  marginLeft: '15%',
-                  marginRight: '15%',
-                  background: 'lightblue',
-                  height: '20px',
+                  width: `${(response.probabilities[index] / maxProbability) * 100}%`,
                 }}
               ></div>
             </div>
           ))}
         </div>
       )}
+      {/* Add a footer if you like */}
+      <footer>
+        © 2024 TE-ICT
+      </footer>
     </div>
   );
 };

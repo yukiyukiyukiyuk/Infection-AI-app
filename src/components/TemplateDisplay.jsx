@@ -9,7 +9,6 @@ function TemplateDisplay({ userName }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedButtons, setSelectedButtons] = useState({ A: false, B: false, C: false });
   const [selectedInfectionButton, setSelectedInfectionButton] = useState('');
-  const [countryOrRegion, setCountryOrRegion] = useState('');
   const [selectedSex, setSelectedSex] = useState('');
   const [age, setAge] = useState('');
   const [freeComment, setFreeComment] = useState('');
@@ -50,12 +49,21 @@ function TemplateDisplay({ userName }) {
           body: JSON.stringify({ userName }),
         });
   
-        if (response.ok) {
-          // ユーザーが存在する場合、アンケート画面を表示
-          fetchImages();
-        } else {
+        const data = await response.json();
+        console.log('Received data:', data); // レスポンスデータを表示
+  
+        // bodyフィールドをJSONオブジェクトにパース
+        const body = JSON.parse(data.body);
+  
+        // userExistsフィールドがブール型として正しく受け取られているか確認
+        const userExists = body.userExists === true || body.userExists === 'true';
+  
+        if (!userExists) {
           // ユーザーが存在しない場合、ポップアップ画面を表示
           setShowModal(true);
+        } else {
+          // ユーザーが存在する場合、アンケート画面を表示（ポップアップは表示しない）
+          fetchImages();
         }
       } catch (error) {
         console.error('Error:', error);
@@ -119,10 +127,6 @@ function TemplateDisplay({ userName }) {
     setSelectedInfectionButton(buttonKey);
   };
 
-  const handleCountryOrRegionChange = (event) => {
-    setCountryOrRegion(event.target.value);
-  };
-
   const handleSexSelect = (sex) => {
     setSelectedSex(sex);
   };
@@ -140,7 +144,6 @@ function TemplateDisplay({ userName }) {
       itemId: images.length > 0 ? images[currentPage].id : null,
       selectedButtons,
       selectedInfectionButton,
-      countryOrRegion,
       selectedSex,
       age,
       freeComment,
@@ -176,7 +179,6 @@ function TemplateDisplay({ userName }) {
   const resetAllStates = () => {
     setSelectedButtons({ A: false, B: false, C: false });
     setSelectedInfectionButton('');
-    setCountryOrRegion('');
     setSelectedSex('');
     setAge('');
     setFreeComment('');
@@ -239,13 +241,6 @@ function TemplateDisplay({ userName }) {
               <button key={button} onClick={() => handleInfectionButtonSelect(button)} className={`button ${selectedInfectionButton === button ? 'selected' : ''}`}>{button}</button>
             ))}
           </div>
-          <p>Country / Region</p>
-          <input
-            type="text"
-            value={countryOrRegion}
-            onChange={handleCountryOrRegionChange}
-            placeholder="Enter country or region"
-          />
           <p>Sex</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
             <button onClick={() => handleSexSelect('Male')} className={`button ${selectedSex === 'Male' ? 'selected' : ''}`}>Male</button>

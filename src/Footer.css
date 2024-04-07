@@ -1,33 +1,27 @@
+/* Footer styles */
 footer {
-    position: fixed; /* フッターを画面の下部に固定 */
-    bottom: 0;
-    width: 100%;
-    max-width: 600px; /* コンテンツの最大幅を600pxに設定 */
-    margin: auto; /* 左右のマージンを自動に設定して中央寄せ */
-    background-color: #f8f9fa; /* ライトグレーの背景色に変更 */
-    color: #333; /* テキスト色をダークに変更 */
-    text-align: center;
-    padding: 10px 0; /* 上下のパディング */
-    border-top: 1px solid #e7e7e7; /* 上部に薄い境界線を追加 */
-  }
-  
-  footer nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  footer nav ul li {
-    display: inline-block;
-  }
-  
-  .centered-button {
-    display: inline-block;
-    background-color: #007bff; /* ボタンの背景色 */
-    color: white; /* ボタンのテキスト色 */
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 20px; /* 丸いボタン */
-    font-weight: bold;
-  }
-  
+  width: 100%;
+  background-color: #fff; /* White background */
+  border-top: 1px solid #ddd; /* Light border for a slight separation */
+  padding: 1em 0; /* Padding above and below the content */
+  position: fixed; /* Fixed position to stick at the bottom */
+  bottom: 0; /* Align to the bottom */
+  left: 0; /* Align to the left */
+  text-align: center; /* Center the text */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  font-size: 0.8em; /* Smaller font size */
+  color: #333; /* Dark grey color for the text */
+  z-index: 1000; /* Ensure footer is above other content */
+}
+
+/* If you have links in your footer, style them here */
+footer a {
+  color: #007bff; /* Blue color for links */
+  text-decoration: none; /* No underline */
+  padding: 0 0.5em; /* Padding on the sides of the link */
+}
+
+footer a:hover,
+footer a:focus {
+  text-decoration: underline; /* Underline on hover/focus */
+}

@@ -4,7 +4,8 @@ import { Amplify } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import config from './amplifyconfiguration.json';
-import Header from './components/Footer';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import ImageUpload from './components/ImageUpload';
 import TemplateDisplay from './components/TemplateDisplay';
 import './App.css'; // 確認してください、これがApp.cssファイルをインポートしています。
@@ -13,15 +14,14 @@ Amplify.configure(config);
 
 function App({ signOut, user }) {
   return (
-    <div className="app-container"> {/* app-containerスタイルを適用 */}
+    <div className="app-container">
       <Router>
-        <Header /> {/* Headerコンポーネントを追加 */}
-        <h1>Hello {user.username}</h1> {/* ユーザー名を表示 */}
-        <button onClick={signOut}>Sign out</button> {/* サインアウトボタンを追加 */}
+        <Header user={user} signOut={signOut}/> {/* Pass user and signOut props to Header */}
         <Routes>
-          <Route path="/" element={<ImageUpload />} /> {/* ImageUploadコンポーネントへのルート */}
-          <Route path="/template-display" element={<TemplateDisplay userName={user.username} />} /> {/* TemplateDisplayコンポーネントへのルート、ユーザー名を渡す */}
+          <Route path="/" element={<ImageUpload />} />
+          <Route path="/template-display" element={<TemplateDisplay userName={user.username} />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

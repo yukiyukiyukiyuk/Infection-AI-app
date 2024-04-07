@@ -1,0 +1,77 @@
+/* Header styles */
+.header {
+    background-color: #fff; /* White background */
+    border-bottom: 1px solid #ddd; /* Light border for some depth */
+    padding: 0.5em 1em; /* Padding around the content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between; /* Space out the title and buttons */
+    align-items: center; /* Align items vertically */
+    max-width: 1024px; /* Maximum width of the content */
+    margin: auto; /* Center the header container */
+  }
+  
+  /* User greeting */
+  .header-container h1 {
+    font-size: 1.5em; /* Size of the greeting text */
+    color: #333; /* Dark grey color for the text */
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove default padding */
+    flex-grow: 1; /* Allow the title to grow to fill space */
+  }
+  
+  /* Navigation container */
+  .navigation {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between navigation items */
+  }
+  
+  /* Navigation buttons */
+  .nav-button {
+    padding: 0.5em 1em; /* Padding inside the buttons */
+    background-color: #007bff; /* Background color for buttons */
+    color: white; /* Text color for buttons */
+    text-decoration: none; /* Remove underline from links */
+    border-radius: 5px; /* Rounded corners for buttons */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .nav-button:hover, .nav-button:focus {
+    background-color: #0056b3; /* Darker blue on hover/focus */
+  }
+  
+  /* Sign out button specifically */
+  .signout-button {
+    padding: 0.5em 1em; /* Padding inside the button */
+    background-color: #dc3545; /* Red color for sign out */
+    color: white; /* Text color */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .signout-button:hover, .signout-button:focus {
+    background-color: #bd2130; /* Darker red on hover/focus */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .header-container {
+      flex-direction: column; /* Stack the items on small screens */
+      align-items: flex-start; /* Align to the start */
+    }
+  
+    .navigation {
+      width: 100%; /* Full width for the navigation */
+      justify-content: space-evenly; /* Space out buttons evenly */
+      padding-top: 0.5em; /* Padding on top of navigation */
+    }
+  }
+  
