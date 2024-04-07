@@ -32,7 +32,7 @@ const App = ({ signOut, user }) => {
       // Use another try-catch for the fetch operation
       (async () => {
         try {
-          const response = await fetch('https://bzyiftyt03.execute-api.ap-northeast-1.amazonaws.com/test', {
+          const response = await fetch('https://zmxyb0tmw6.execute-api.ap-northeast-1.amazonaws.com/test', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
