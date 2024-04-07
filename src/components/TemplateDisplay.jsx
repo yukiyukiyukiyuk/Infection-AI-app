@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import '../App.css'; // CSSファイルをインポート
+import Modal from 'react-modal';
+import '../App.css';
+
+Modal.setAppElement('#root');
 
 function TemplateDisplay({ userName }) {
   const [images, setImages] = useState([]);
@@ -10,6 +13,8 @@ function TemplateDisplay({ userName }) {
   const [selectedSex, setSelectedSex] = useState('');
   const [age, setAge] = useState('');
   const [freeComment, setFreeComment] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [doctorData, setDoctorData] = useState({ name: '', country: '', hospital: '', position: '', yearsOfService: '' });
 
   const fetchImages = useCallback(async () => {
     if (!userName) return;
@@ -35,8 +40,63 @@ function TemplateDisplay({ userName }) {
   }, [userName]);
 
   useEffect(() => {
-    fetchImages();
-  }, [fetchImages]);
+    const checkDoctorData = async () => {
+      try {
+        const response = await fetch('https://sa4mhq95rh.execute-api.ap-northeast-1.amazonaws.com/dev', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userName }),
+        });
+  
+        if (response.ok) {
+          // ユーザーが存在する場合、アンケート画面を表示
+          fetchImages();
+        } else {
+          // ユーザーが存在しない場合、ポップアップ画面を表示
+          setShowModal(true);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+  
+    checkDoctorData();
+  }, [userName, fetchImages]);
+  
+
+
+  const handleModalSubmit = async () => {
+    try {
+      const response = await fetch('https://uymox3lxaj.execute-api.ap-northeast-1.amazonaws.com/dev', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName: userName, // ユーザー名を追加
+          name: doctorData.name,
+          country: doctorData.country,
+          hospital: doctorData.hospital,
+          position: doctorData.position,
+          yearsOfService: doctorData.yearsOfService
+        }),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        alert('Data successfully submitted!');
+        setShowModal(false);
+        fetchImages();
+      } else {
+        alert('Error submitting data: ' + data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error submitting data');
+    }
+  };
 
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
@@ -124,6 +184,40 @@ function TemplateDisplay({ userName }) {
 
   return (
     <div className="App" style={{ textAlign: 'center' }}>
+      <Modal isOpen={showModal} onRequestClose={() => setShowModal(false)}>
+        <h2>Enter Doctor Data</h2>
+        <input
+          type="text"
+          value={doctorData.name}
+          onChange={(e) => setDoctorData({ ...doctorData, name: e.target.value })}
+          placeholder="Enter name"
+        />
+        <input
+          type="text"
+          value={doctorData.country}
+          onChange={(e) => setDoctorData({ ...doctorData, country: e.target.value })}
+          placeholder="Enter country"
+        />
+        <input
+          type="text"
+          value={doctorData.hospital}
+          onChange={(e) => setDoctorData({ ...doctorData, hospital: e.target.value })}
+          placeholder="Enter hospital"
+        />
+        <input
+          type="text"
+          value={doctorData.position}
+          onChange={(e) => setDoctorData({ ...doctorData, position: e.target.value })}
+          placeholder="Enter position"
+        />
+        <input
+          type="number"
+          value={doctorData.yearsOfService}
+          onChange={(e) => setDoctorData({ ...doctorData, yearsOfService: e.target.value })}
+          placeholder="Enter years of service"
+        />
+        <button onClick={handleModalSubmit}>Submit</button>
+      </Modal>
       <div>
         <button onClick={handlePrevious} disabled={currentPage <= 0}>前のページ</button>
         <button onClick={handleNext} disabled={currentPage >= images.length - 1}>次のページ</button>
@@ -135,13 +229,13 @@ function TemplateDisplay({ userName }) {
           <p>ID: {images[currentPage].id}</p>
           <p>How</p>
           <div className="vertical-buttons">
-            {['Smear examination​', 'Culture​', 'Clinical findings​'].map((button) => (
+            {['Smear examination', 'Culture', 'Clinical findings'].map((button) => (
               <button key={button} onClick={() => handleButtonSelect(button)} className={`button ${selectedButtons[button] ? 'selected' : ''}`}>{button}</button>
             ))}
           </div>
           <p>Infection</p>
           <div className="vertical-buttons">
-            {['Achanthamoeba​', 'Bacterial​', 'Fungal​', 'Viral​', 'Others​'].map((button) => (
+            {['Achanthamoeba', 'Bacterial', 'Fungal', 'Viral', 'Others'].map((button) => (
               <button key={button} onClick={() => handleInfectionButtonSelect(button)} className={`button ${selectedInfectionButton === button ? 'selected' : ''}`}>{button}</button>
             ))}
           </div>
