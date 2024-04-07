@@ -13,16 +13,14 @@ Amplify.configure(config);
 
 function App({ signOut, user }) {
   return (
-    <div className="app-container">
+    <div className="app-container"> {/* app-containerスタイルを適用 */}
       <Router>
-        <Header />
-        <div className="header-container">
-          <h1>Hello {user.username}</h1>
-          <button className="sign-out-button" onClick={signOut}>Sign out</button>
-        </div>
+        <Header /> {/* Headerコンポーネントを追加 */}
+        <h1>Hello {user.username}</h1> {/* ユーザー名を表示 */}
+        <button onClick={signOut}>Sign out</button> {/* サインアウトボタンを追加 */}
         <Routes>
-          <Route path="/" element={<ImageUpload />} />
-          <Route path="/template-display" element={<TemplateDisplay userName={user.username} />} />
+          <Route path="/" element={<ImageUpload />} /> {/* ImageUploadコンポーネントへのルート */}
+          <Route path="/template-display" element={<TemplateDisplay userName={user.username} />} /> {/* TemplateDisplayコンポーネントへのルート、ユーザー名を渡す */}
         </Routes>
       </Router>
     </div>
