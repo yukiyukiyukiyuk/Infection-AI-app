@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import Modal from 'react-modal';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
-
-Modal.setAppElement('#root');
 
 function TemplateDisplay({ userName }) {
   const [images, setImages] = useState([]);
@@ -29,74 +26,18 @@ function TemplateDisplay({ userName }) {
         body: JSON.stringify({ userName }),
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setImages(data);
-    } catch (error) {
-      console.error('Fetch error:', error);
-    }
-  }, [userName]);
-
-  useEffect(() => {
-    const checkDoctorData = async () => {
-      try {
-        const response = await fetch('https://sa4mhq95rh.execute-api.ap-northeast-1.amazonaws.com/dev', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userName }),
-        });
-  
-        if (response.ok) {
-          // ユーザーが存在する場合、アンケート画面を表示
-          fetchImages();
-        } else {
-          // ユーザーが存在しない場合、ポップアップ画面を表示
-          setShowModal(true);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        const data = await response.json();
+        setImages(data);
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Fetch error:', error);
       }
     };
-  
-    checkDoctorData();
-  }, [userName, fetchImages]);
-  
 
-
-  const handleModalSubmit = async () => {
-    try {
-      const response = await fetch('https://uymox3lxaj.execute-api.ap-northeast-1.amazonaws.com/dev', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userName: userName, // ユーザー名を追加
-          name: doctorData.name,
-          country: doctorData.country,
-          hospital: doctorData.hospital,
-          position: doctorData.position,
-          yearsOfService: doctorData.yearsOfService
-        }),
-      });
-  
-      const data = await response.json();
-      if (response.ok) {
-        alert('Data successfully submitted!');
-        setShowModal(false);
-        fetchImages();
-      } else {
-        alert('Error submitting data: ' + data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error submitting data');
-    }
-  };
+    fetchImages();
+  }, [userName]);
 
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
@@ -229,14 +170,14 @@ function TemplateDisplay({ userName }) {
           <p>ID: {images[currentPage].id}</p>
           <p>How</p>
           <div className="vertical-buttons">
-            {['Smear examination', 'Culture', 'Clinical findings'].map((button) => (
-              <button key={button} onClick={() => handleButtonSelect(button)} className={`button ${selectedButtons[button] ? 'selected' : ''}`}>{button}</button>
+            {['A', 'B', 'C'].map((button) => (
+              <button key={button} onClick={() => handleButtonSelect(button)} className={selectedButtons[button] ? 'selected' : ''}>{button}</button>
             ))}
           </div>
           <p>Infection</p>
           <div className="vertical-buttons">
-            {['Achanthamoeba', 'Bacterial', 'Fungal', 'Viral', 'Others'].map((button) => (
-              <button key={button} onClick={() => handleInfectionButtonSelect(button)} className={`button ${selectedInfectionButton === button ? 'selected' : ''}`}>{button}</button>
+            {['A', 'B', 'C', 'D', 'E'].map((button) => (
+              <button key={button} onClick={() => handleInfectionButtonSelect(button)} className={selectedInfectionButton === button ? 'selected' : ''}>{button}</button>
             ))}
           </div>
           <p>Country / Region</p>
