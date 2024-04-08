@@ -5,7 +5,7 @@ import '../Header.css'; // Make sure your CSS styles are correctly imported
 const Header = ({ user, signOut }) => {
   const location = useLocation();
   const isHome = location.pathname === '/';
-  const buttonLabel = isHome ? 'Question' : 'Home';
+  const buttonLabel = isHome ? 'Follow up' : 'Home';
   const linkTo = isHome ? '/template-display' : '/';
 
   return (
@@ -13,7 +13,7 @@ const Header = ({ user, signOut }) => {
       <div className="header-container">
         <h1>Hello {user.username}</h1>
         <div className="navigation">
-          {/* Toggle button between 'Question' and 'Home' */}
+          {/* Toggle button between 'Follow up' and 'Home' */}
           <Link to={linkTo} className="nav-button">
             {buttonLabel}
           </Link>

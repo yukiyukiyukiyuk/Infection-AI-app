@@ -185,68 +185,85 @@ function TemplateDisplay({ userName }) {
   };
 
   return (
-    <div className="App" style={{ textAlign: 'center' }}>
-      <Modal isOpen={showModal} onRequestClose={() => setShowModal(false)}>
-        <h2>Enter Doctor Data</h2>
-        <input
-          type="text"
-          value={doctorData.name}
-          onChange={(e) => setDoctorData({ ...doctorData, name: e.target.value })}
-          placeholder="Enter name"
-        />
-        <input
-          type="text"
-          value={doctorData.country}
-          onChange={(e) => setDoctorData({ ...doctorData, country: e.target.value })}
-          placeholder="Enter country"
-        />
-        <input
-          type="text"
-          value={doctorData.hospital}
-          onChange={(e) => setDoctorData({ ...doctorData, hospital: e.target.value })}
-          placeholder="Enter hospital"
-        />
-        <input
-          type="text"
-          value={doctorData.position}
-          onChange={(e) => setDoctorData({ ...doctorData, position: e.target.value })}
-          placeholder="Enter position"
-        />
-        <input
-          type="number"
-          value={doctorData.yearsOfService}
-          onChange={(e) => setDoctorData({ ...doctorData, yearsOfService: e.target.value })}
-          placeholder="Enter years of service"
-        />
-        <button onClick={handleModalSubmit}>Submit</button>
+    <div className="App">
+      <Modal 
+        isOpen={showModal} 
+        onRequestClose={() => setShowModal(false)}
+        className="doctor-modal"
+        overlayClassName="modal-overlay"
+      >
+        <h2>Doctor Data</h2>
+        <form onSubmit={handleModalSubmit} className="doctor-form">
+          <label>
+            Please enter your name.
+            <input
+              type="text"
+              value={doctorData.name}
+              onChange={(e) => setDoctorData({ ...doctorData, name: e.target.value })}
+            />
+          </label>
+          <label>
+            Which country are you from?
+            <input
+              type="text"
+              value={doctorData.country}
+              onChange={(e) => setDoctorData({ ...doctorData, country: e.target.value })}
+            />
+          </label>
+          <label>
+            Which hospital are you affiliated with?
+            <input
+              type="text"
+              value={doctorData.hospital}
+              onChange={(e) => setDoctorData({ ...doctorData, hospital: e.target.value })}
+            />
+          </label>
+          <label>
+            What is your position at the hospital?
+            <input
+              type="text"
+              value={doctorData.position}
+              onChange={(e) => setDoctorData({ ...doctorData, position: e.target.value })}
+            />
+          </label>
+          <label>
+            Please specify the number of years you have been working as a medical doctor.
+            <input
+              type="number"
+              value={doctorData.yearsOfService}
+              onChange={(e) => setDoctorData({ ...doctorData, yearsOfService: e.target.value })}
+            />
+          </label>
+          <button type="submit" className="submit-button">Submit</button>
+        </form>
       </Modal>
-      <div>
-        <button onClick={handlePrevious} disabled={currentPage <= 0}>前のページ</button>
-        <button onClick={handleNext} disabled={currentPage >= images.length - 1}>次のページ</button>
+      <div className="button-container">
+        <button onClick={handlePrevious} disabled={currentPage <= 0}>Previous</button>
+        <button onClick={handleNext} disabled={currentPage >= images.length - 1}>Next</button>
       </div>
       {images.length > 0 && currentPage < images.length && (
         <div>
           <h2>{images[currentPage].name}</h2>
           <img src={`data:image/jpeg;base64,${images[currentPage].imageData}`} alt={images[currentPage].name} style={{ maxWidth: '100%', maxHeight: '400px' }} />
           <p>ID: {images[currentPage].id}</p>
-          <p>How</p>
-          <div className="vertical-buttons">
-            {['Smear examination', 'Culture', 'Clinical findings'].map((button) => (
+          <p>Q1　How diagnosed ?</p>
+          <div className="q1-button-container">
+            {['Smear', 'Culture', 'Clinical findings'].map((button) => (
               <button key={button} onClick={() => handleButtonSelect(button)} className={`button ${selectedButtons[button] ? 'selected' : ''}`}>{button}</button>
             ))}
           </div>
-          <p>Infection</p>
+          <p>Q2  Final diagnosis ?</p>
           <div className="vertical-buttons">
             {['Achanthamoeba', 'Bacterial', 'Fungal', 'Viral', 'Others'].map((button) => (
               <button key={button} onClick={() => handleInfectionButtonSelect(button)} className={`button ${selectedInfectionButton === button ? 'selected' : ''}`}>{button}</button>
             ))}
           </div>
-          <p>Sex</p>
+          <p>Q3　Patient gender ?</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
             <button onClick={() => handleSexSelect('Male')} className={`button ${selectedSex === 'Male' ? 'selected' : ''}`}>Male</button>
             <button onClick={() => handleSexSelect('Female')} className={`button ${selectedSex === 'Female' ? 'selected' : ''}`}>Female</button>
           </div>
-          <p>Age</p>
+          <p>Q4　Patient age ?</p>
           <input
             type="number"
             value={age}
@@ -254,15 +271,19 @@ function TemplateDisplay({ userName }) {
             placeholder="Enter age"
             min="0"
           />
-          <p>Free comment</p>
+          <p>Q5　Open feedback</p>
           <textarea
             value={freeComment}
             onChange={handleFreeCommentChange}
             placeholder="Enter your comment"
             rows="3"
-            style={{ width: '80%', boxSizing: 'border-box' }}
+            className="feedback-textarea" // classNameを追加してスタイリングを行う
           />
-          <button onClick={handleSubmit} style={{ marginTop: '20px', marginBottom: '60px' }} className="button" disabled={!selectedInfectionButton}>決定</button>
+          <div className="confirm-button-container"> {/* 新しいコンテナでボタンをラップ */}
+          <button onClick={handleSubmit} className="button" disabled={!selectedInfectionButton}>
+          Confirm
+          </button>
+          </div>
         </div>
       )}
     </div>

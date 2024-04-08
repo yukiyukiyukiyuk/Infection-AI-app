@@ -6,12 +6,13 @@ import config from '../amplifyconfiguration.json';
 
 Amplify.configure(config);
 
+// `labels`配列はコンポーネントの外部に定義されています。
+const labels = ['Acanthamoeba', 'Bacterial', 'Others', 'Fungal', 'Viral'];
+
 const App = ({ signOut, user }) => {
   const [image, setImage] = useState(null);
   const [response, setResponse] = useState(null);
-  const [maxProbability, setMaxProbability] = useState(1);
-
-  const labels = ['Acanthamoeba', 'Bacterial', 'Others', 'Fungal', 'Viral'];
+  const [sortedProbabilities, setSortedProbabilities] = useState([]);
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -27,9 +28,8 @@ const App = ({ signOut, user }) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64Image = reader.result.replace(/\s/g, '').split(',')[1];
-      const fileName = image.name; // Get the name of the file
+      const fileName = image.name;
 
-      // Use another try-catch for the fetch operation
       (async () => {
         try {
           const response = await fetch('https://zmxyb0tmw6.execute-api.ap-northeast-1.amazonaws.com/test', {
@@ -58,48 +58,51 @@ const App = ({ signOut, user }) => {
   };
 
   useEffect(() => {
-    if (response) {
-      const newMaxProbability = Math.max(...response.probabilities);
-      setMaxProbability(newMaxProbability);
+    if (response && response.probabilities) {
+      const probabilitiesWithLabels = labels.map((label, index) => ({
+        label,
+        probability: response.probabilities[index],
+      }));
+
+      const sorted = probabilitiesWithLabels.sort((a, b) => b.probability - a.probability);
+      setSortedProbabilities(sorted);
     }
   }, [response]);
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleImageChange} />
-        <button type="submit">Upload</button>
-      </form>
+      <div className="form-container">
+        <form onSubmit={handleSubmit} className="upload-form">
+          <label className="custom-file-upload button-diagnosis">
+            <input type="file" className="hidden" onChange={handleImageChange} />
+            Upload
+          </label>
+          <button type="submit" className="button-diagnosis">AI Diagnosis</button>
+        </form>
+      </div>
       {image && (
         <div>
           <p className="selected-file">Selected file: {image.name}</p>
           <img src={URL.createObjectURL(image)} alt="Selected" />
         </div>
       )}
-      {response && (
-        <div>
-          <p className="result-text">
-            The highest probability result is "{labels[response.probabilities.indexOf(maxProbability)]}".
-          </p>
-          {labels.map((label, index) => (
+      {sortedProbabilities.length > 0 && (
+        <div className="results-container">
+          {sortedProbabilities.map((item, index) => (
             <div className="probability-bar-container" key={index}>
               <p className="probability-label">
-                {label}: {response.probabilities[index]}
+                {item.label}: {Math.round(item.probability * 100)}%
               </p>
               <div
                 className="probability-bar"
                 style={{
-                  width: `${(response.probabilities[index] / maxProbability) * 100}%`,
+                  width: `${(item.probability / sortedProbabilities[0].probability) * 100}%`,
                 }}
-              ></div>
+              />
             </div>
           ))}
         </div>
       )}
-      {/* Add a footer if you like */}
-      <footer>
-        © 2024 TE-ICT
-      </footer>
     </div>
   );
 };

@@ -63,36 +63,206 @@
 
 .vertical-buttons {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px; /* ボタン間のスペース */
+  justify-content: space-around; /* ボタンを均等に配置する */
+  margin: 10px 0; /* 上下のマージン */
 }
 
 .button {
-  width: 150px; /* ボタンの幅を統一 */
-  height: 40px; /* ボタンの高さを統一 */
-  font-size: 16px; /* テキストサイズを調整 */
+  background-color: #f0f0f0; /* ボタンの背景色 */
+  border: 2px solid #ddd; /* ボタンのボーダー */
+  padding: 10px 20px; /* パディング */
+  border-radius: 20px; /* 角丸のボーダーレイアウト */
+  cursor: pointer; /* カーソルポインタ */
+  transition: all 0.3s ease; /* トランジション効果 */
 }
+
 .button.selected {
-  background-color: #4CAF50; /* 選択されたボタンの背景色 */
+  background-color: #007bff; /* 選択されたボタンの背景色 */
   color: white; /* 選択されたボタンのテキスト色 */
-}
-.vertical-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px; /* ボタン間のスペース */
-}
-
-.button {
-  width: 150px; /* ボタンの幅を統一 */
-  height: auto; /* ボタンの高さを内容に合わせて自動調整 */
-  padding: 10px; /* ボタン内のパディングを調整 */
-  font-size: 16px; /* テキストサイズを調整 */
-  white-space: normal; /* テキストがボタン内で折り返されるように設定 */
-  text-align: center; /* テキストを中央揃えに */
+  border-color: #007bff; /* 選択されたボタンのボーダー色 */
 }
 
 .App-header {
   margin-bottom: 20px; /* ヘッダーの下マージンを設定 */
+}
+
+.hidden {
+  display: none;
+}
+
+/* カスタムアップロードボタンのスタイル */
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.results-container {
+  width: 80%; /* 幅を画面の80%に設定 */
+  margin: 0 auto; /* 上下のマージンを0にし、左右のマージンを自動で中央揃えにする */
+  max-width: 960px; /* 必要に応じて最大幅を設定する */
+}
+
+/* ラベルとバーのコンテナを左揃えにするスタイル */
+.probability-bar-container {
+  text-align: left;
+  margin-bottom: 10px; /* 見やすい間隔を設定 */
+}
+
+.probability-label {
+  margin: 0; /* 余白を取り除く */
+  font-size: 16px; /* フォントサイズを適切に設定 */
+}
+
+.probability-bar {
+  height: 20px; /* バーの高さ */
+  background-color: #4caf50; /* バーの色 */
+  margin-top: 5px; /* バーの上の余白 */
+}
+
+/* ボタンを含むフォームにフレックスボックスのスタイルを適用 */
+.form-container {
+  display: flex;
+  justify-content: space-between; /* ボタン間のスペースを最大にする */
+  width: 100%; /* 必要に応じて幅を調整 */
+  margin-bottom: 20px; /* フォーム下部のマージンを調整 */
+}
+
+/* 個別のボタンスタイル（必要に応じて） */
+.button-upload,
+.button-diagnosis {
+  flex-grow: 1; /* ボタンが利用可能なスペースを均等に分けて使う */
+  margin: 0 10px; /* 左右のボタンに10pxのマージンを適用 */
+}
+
+.custom-file-upload, .button-diagnosis {
+  margin-top: 15px;
+  
+  background-color: #007bff; /* ボタンの背景色 */
+  color: white; /* テキストの色 */
+  padding: 10px 15px; /* パディング */
+  border: none; /* 境界線なし */
+  border-radius: 5px; /* 境界線の丸み */
+  margin-right: 0%; /* 右のマージン */
+  cursor: pointer; /* カーソルスタイル */
+  font-size: 16px; /* フォントサイズ */
+  text-align: center; /* テキストを中央に */
+  display: inline-block; /* インラインブロック表示 */
+  transition: background-color 0.3s; /* 背景色の変化を滑らかに */
+}
+
+.custom-file-upload:hover, .button-diagnosis:hover {
+  background-color: #0056b3; /* ホバー時の背景色 */
+}
+
+/* フォーム内要素間のスペース */
+.form-container form {
+  display: flex;
+  align-items: center;
+}
+
+/* ファイル入力フィールドを隠す */
+.hidden {
+  display: none;
+}
+
+.button-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between; /* ボタン間にスペースを最大限取る */
+  padding: 0 25%; /* 左右に25%ずつパディングを設定して、ボタン間の実質的なスペースを50%にする */
+}
+
+.confirm-button-container {
+  display: flex;
+  justify-content: center; /* 中央揃えにする */
+  margin-top: 20px; /* 上部に余白を追加する */
+  margin-bottom: 100px;
+}
+
+.feedback-textarea {
+  width: 80%; /* 幅を80%に設定 */
+  box-sizing: border-box; /* パディングとボーダーを幅に含める */
+  margin-top: 10px; /* 上部の余白 */
+  margin-bottom: 20px; /* 下部の余白 */
+}
+
+.q1-button-container {
+  display: flex;
+  justify-content: center; /* 中央に配置 */
+  gap: 10px; /* ボタン間に10pxのスペースを作る */
+  margin-bottom: 20px; /* 下に余白を追加 */
+}
+
+/* Style for the modal content */
+.doctor-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%; /* Suitable for mobile devices */
+  max-width: 400px; /* Maximum width */
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+/* Style for the overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Style for the form inside the modal */
+.doctor-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align items */
+}
+
+/* Style for labels and inputs */
+.doctor-form label {
+    width: 100%; /* Full width of the form */
+    margin: 10px 0;
+}
+
+.doctor-form input {
+  width: calc(100% - 40px); /* Full width minus padding */
+  margin: auto; /* Center the input horizontally */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style for the submit button */
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: calc(100% - 40px); /* Full width minus padding */
+  margin: 20px auto; /* Margin top and bottom, auto horizontally to center */
 }
