@@ -3,19 +3,23 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import '../App.css';
 import { Amplify } from 'aws-amplify';
 import config from '../amplifyconfiguration.json';
+import mainImage from '../img/main.png'; // main.pngのパスをプロジェクトの構成に合わせて変更してください
 
 Amplify.configure(config);
 
-// `labels`配列はコンポーネントの外部に定義されています。
 const labels = ['Acanthamoeba', 'Bacterial', 'Others', 'Fungal', 'Viral'];
 
 const App = ({ signOut, user }) => {
   const [image, setImage] = useState(null);
   const [response, setResponse] = useState(null);
   const [sortedProbabilities, setSortedProbabilities] = useState([]);
+  const [showDefaultImage, setShowDefaultImage] = useState(true); // デフォルト画像の表示状態を管理するためのstate
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+      setShowDefaultImage(false); // 画像が選択されたらデフォルト画像を非表示にする
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -24,12 +28,11 @@ const App = ({ signOut, user }) => {
       alert('Please select an image.');
       return;
     }
-
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64Image = reader.result.replace(/\s/g, '').split(',')[1];
       const fileName = image.name;
-
+      
       (async () => {
         try {
           const response = await fetch('https://zmxyb0tmw6.execute-api.ap-northeast-1.amazonaws.com/test', {
@@ -39,11 +42,11 @@ const App = ({ signOut, user }) => {
             },
             body: JSON.stringify({ body: base64Image, fileName: fileName, userName: user.username }),
           });
-
+          
           if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
           }
-
+          
           const result = await response.json();
           setResponse(result);
           console.log(result);
@@ -53,7 +56,6 @@ const App = ({ signOut, user }) => {
         }
       })();
     };
-
     reader.readAsDataURL(image);
   };
 
@@ -80,12 +82,20 @@ const App = ({ signOut, user }) => {
           <button type="submit" className="button-diagnosis">AI Diagnosis</button>
         </form>
       </div>
+
+      {showDefaultImage && !image && (
+        <div className="default-image-container">
+          <img src={mainImage} alt="Default" />
+        </div>
+      )}
+
       {image && (
         <div>
           <p className="selected-file">Selected file: {image.name}</p>
           <img src={URL.createObjectURL(image)} alt="Selected" />
         </div>
       )}
+
       {sortedProbabilities.length > 0 && (
         <div className="results-container">
           {sortedProbabilities.map((item, index) => (

@@ -266,3 +266,7 @@
   width: calc(100% - 40px); /* Full width minus padding */
   margin: 20px auto; /* Margin top and bottom, auto horizontally to center */
 }
+
+.default-image-container {
+  margin-top: 100px;
+}
