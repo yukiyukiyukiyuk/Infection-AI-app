@@ -16,15 +16,18 @@ function App({ signOut, user }) {
   return (
     <div className="app-container">
       <Router>
-        <Header user={user} signOut={signOut}/> {/* Pass user and signOut props to Header */}
-        <Routes>
-          <Route path="/" element={<ImageUpload />} />
-          <Route path="/template-display" element={<TemplateDisplay userName={user.username} />} />
-        </Routes>
+        <Header user={user} signOut={signOut}/>
+        <div className="routes-container">
+          <Routes>
+            <Route path="/" element={<ImageUpload />} />
+            <Route path="/template-display" element={<TemplateDisplay userName={user.username} />} />
+          </Routes>
+        </div>
         <Footer />
       </Router>
     </div>
   );
 }
+
 
 export default withAuthenticator(App);

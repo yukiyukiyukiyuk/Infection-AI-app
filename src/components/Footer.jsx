@@ -6,7 +6,6 @@ const Footer = () => {
     <footer className="footer">
       {/* Footer content */}
       <p>© 2024 TE-ICT</p>
-      <p>This AI can make mistakes. Please assist with the follow-up to improve accuracy!</p>
     </footer>
   );
 }

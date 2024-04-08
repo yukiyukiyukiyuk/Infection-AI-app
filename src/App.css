@@ -270,3 +270,10 @@
 .default-image-container {
   margin-top: 50px;
 }
+
+.follow-up-message-2 {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 100px; /* 下部に100pxのマージンを追加 */
+}
