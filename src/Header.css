@@ -1,6 +1,6 @@
 /* Header styles */
 .header {
-    background-color: #fff; /* White background */
+    background-color: 	#F1F1F3; /* White background */
     border-bottom: 1px solid #ddd; /* Light border for some depth */
     padding: 0.5em 1em; /* Padding around the content */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
@@ -33,8 +33,8 @@
   /* Navigation buttons */
   .nav-button {
     padding: 0.5em 1em; /* Padding inside the buttons */
-    background-color: #007bff; /* Background color for buttons */
-    color: white; /* Text color for buttons */
+    background-color:	#1F7D95; /* Background color for buttons */
+    color: 	#F1F1F3; /* Text color for buttons */
     text-decoration: none; /* Remove underline from links */
     border-radius: 5px; /* Rounded corners for buttons */
     border: none; /* Remove border */
@@ -43,14 +43,14 @@
   }
   
   .nav-button:hover, .nav-button:focus {
-    background-color: #0056b3; /* Darker blue on hover/focus */
+    background-color:#1F7D95; /* Darker blue on hover/focus */
   }
   
   /* Sign out button specifically */
   .signout-button {
     padding: 0.5em 1em; /* Padding inside the button */
-    background-color: #dc3545; /* Red color for sign out */
-    color: white; /* Text color */
+    background-color: #3B5998; /* Red color for sign out */
+    color: 	#F1F1F3; /* Text color */
     border-radius: 5px; /* Rounded corners */
     border: none; /* No border */
     cursor: pointer; /* Pointer cursor on hover */
@@ -58,7 +58,7 @@
   }
   
   .signout-button:hover, .signout-button:focus {
-    background-color: #bd2130; /* Darker red on hover/focus */
+    background-color: #3B5998; /* Darker red on hover/focus */
   }
   
   /* Responsive design for smaller screens */
